@@ -35,7 +35,7 @@ public:
 class cameraDouble : public camera {
     std::string tipConfiguratie;
 public:
-    cameraDouble(int nr, int et, std::string config, double p=250.0);
+    cameraDouble(int nr, int et, const std::string& config, double p=250.0);
     void afisareDetalii(std::ostream& os) const override;
 };
 
