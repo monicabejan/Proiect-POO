@@ -4,9 +4,6 @@
 
 rezervare::rezervare(const std::string& nume) : numeClient(nume){}
 
-const std::string& rezervare::getNumeClient() const{
-    return numeClient;
-} 
 
 void rezervare::adaugaCamera(std::shared_ptr<camera> cam){
     camereRezervate.push_back(cam);
