@@ -43,22 +43,6 @@ void hotel::afisareCamereFiltrat(double pretMax){
         std::cout<<"Nicio camera disponibila sub acest pret. \n";
 }
 
-void hotel::rezervaCamera(int nr){
-    bool gasit =false;
-    for(const auto& camPtr : camere){
-        if(camPtr->getNr() == nr){
-            gasit=true;
-            if(!camPtr->esteOcupata())
-                camPtr->setOcupata(true);
-            else 
-                std::cout<<"Camera "<<nr<<" nu este disponibila.\n";
-            break;
-        } 
-        
-    }
-    if(!gasit)
-        std::cout<<"Camera "<<nr<<" nu exista.\n";
-}
 
 std::shared_ptr<camera> hotel::getCameraByNr(int nr){
     for(const auto& camPtr : camere)
