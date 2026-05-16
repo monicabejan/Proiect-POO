@@ -20,7 +20,7 @@ int main()
 
 
     int optiune=0;
-    while (cout << "Optiune: " && cin >> optiune){
+    while (std::cout << "Optiune: " && std::cin >> optiune){
         std::cout<<"MENIU INTERACTIV \n";
         std::cout<<"0. Exit \n";
         std::cout<<"1. Vizualizare camere disponibile \n";
