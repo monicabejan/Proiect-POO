@@ -10,7 +10,7 @@ class rezervare{
     std::string numeClient;
     std::vector<std::shared_ptr<camera>>camereRezervate;
 public:
-    rezervare(const std::string& nume);
+    explicit rezervare(const std::string& nume);
 
     const std::string& getNumeClient() const;
     void adaugaCamera(std::shared_ptr<camera> camPtr);
