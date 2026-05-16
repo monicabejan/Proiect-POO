@@ -45,7 +45,7 @@ void hotel::afisareCamereFiltrat(double pretMax){
 
 void hotel::rezervaCamera(int nr){
     bool gasit =false;
-    for(auto& camPtr : camere){
+    for(const auto& camPtr : camere){
         if(camPtr->getNr() == nr){
             gasit=true;
             if(!camPtr->esteOcupata())
@@ -61,7 +61,7 @@ void hotel::rezervaCamera(int nr){
 }
 
 std::shared_ptr<camera> hotel::getCameraByNr(int nr){
-    for(auto& camPtr : camere)
+    for(const auto& camPtr : camere)
         if(camPtr->getNr() == nr)
             return camPtr;
     return nullptr;
