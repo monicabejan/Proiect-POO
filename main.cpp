@@ -1,48 +1,87 @@
 #include <iostream>
-#include <array>
+#include <thread>
+#include <chrono> //pentru sleep()
+#include "camera.h"
+#include "hotel.h"
+#include "rezervare.h"
+int main()
+{ 
+    hotel* hotel=hotel::getInstanta();
 
-int main() {
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    return 0;
+    hotel->creeazaCamera<cameraSingle>(101, 1, 100);
+    hotel->creeazaCamera<cameraSingle>(102, 1, 100);
+    hotel->creeazaCamera<cameraSingle>(103, 1);
+
+    hotel->creeazaCamera<cameraDouble>(105, 1, "Twin", 200);
+    hotel->creeazaCamera<cameraDouble>(106, 2, "Matrimonial");
+
+    hotel->creeazaCamera<penthouse>(201, 2, 3, 550);
+    hotel->creeazaCamera<penthouse>(202, 2, 4);
+
+
+    int optiune=0;
+    do{
+        std::cout<<"MENIU INTERACTIV \n";
+        std::cout<<"0. Exit \n";
+        std::cout<<"1. Vizualizare camere disponibile \n";
+        std::cout<<"2. Filtrare dupa pret \n";
+        std::cout<<"3. Rezervare camere \n";
+        std::cout<<"4. Istoric rezervari \n";
+
+        std::cout<<"Optiune: ";
+        std::cin>>optiune;
+
+        try{
+            switch(optiune){
+
+                case 1:
+                hotel->afisareCamereLibere();
+                break;
+
+                case 2:{
+                double pretMax;
+                std::cout<<"\nPret maxim: ";
+                std::cin>>pretMax;
+                hotel->afisareCamereFiltrat(pretMax);
+                break;
+                }
+                
+                case 3:{
+                std::string nume;
+                std::cout<<"\nNume client: ";
+                std::cin>>nume;
+
+                rezervare sesiune(nume);
+                int nrCam;
+                do{
+                    hotel->afisareCamereLibere();
+                    std::cout<<"\nNr camera de rezervat (0 pentru finalizare): ";
+                    std::cin>>nrCam;
+
+                    if(nrCam)
+                        hotel->rezervaCameraInSesiune(sesiune, nrCam);
+                } while(nrCam);
+                hotel->finalizeazaRezervare(sesiune);
+                
+                break;
+                }
+
+                case 4:
+                hotel->afisareIstoricRezervari();
+                break;
+
+                default:
+                //throw ExceptieOptiuneInvalida();
+                break;
+                
+            }
+        } catch(...){}
+        //catch (const ExceptiiHotel& e){
+        //     std::cout<<e.what()<<"\n";
+        // }
+        if(optiune)
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+
+        
+    }while (optiune);
 }
