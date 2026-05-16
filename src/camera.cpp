@@ -20,7 +20,7 @@ void cameraSingle::afisareDetalii(std::ostream& os) const {
     os<<" Single";
 }
 
-cameraDouble::cameraDouble(int nr, int et, std::string config, double p) : camera(nr, et, p), tipConfiguratie(config) {}
+cameraDouble::cameraDouble(int nr, int et, const std::string& config, double p) : camera(nr, et, p), tipConfiguratie(config) {}
 void cameraDouble::afisareDetalii (std::ostream& os) const{
     os<<" Double "
       <<"configuratie: "<<tipConfiguratie;
