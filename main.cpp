@@ -20,7 +20,7 @@ int main()
 
 
     int optiune=0;
-    while (std::cout << "Optiune: " && std::cin >> optiune){
+    do{
         std::cout<<"MENIU INTERACTIV \n";
         std::cout<<"0. Exit \n";
         std::cout<<"1. Vizualizare camere disponibile \n";
@@ -83,5 +83,5 @@ int main()
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
         
-    }
+    } while ( (std::cin >> optiune)&& optiune);
 }
