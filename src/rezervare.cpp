@@ -5,7 +5,6 @@
 rezervare::rezervare(const std::string& nume) : numeClient(nume){}
 
 const std::string& rezervare::getNumeClient() const{
-    cppcheck-suppress returnReference
     return numeClient;
 } 
 
