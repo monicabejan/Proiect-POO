@@ -29,7 +29,7 @@ int main()
         std::cout<<"4. Istoric rezervari \n";
 
         std::cout<<"Optiune: ";
-        std::cin>>optiune;
+        if( std::cin>>optiune){
 
         try{
             switch(optiune){
@@ -79,6 +79,7 @@ int main()
         //catch (const ExceptiiHotel& e){
         //     std::cout<<e.what()<<"\n";
         // }
+        }
         if(optiune)
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
