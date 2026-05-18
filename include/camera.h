@@ -22,7 +22,7 @@ public:
      double getPret() const { return pret;}
      bool esteOcupata() const { return status;}
      void setOcupata(bool i) { status=i;}
-     void setPret(double p){pret=p;}
+     
 
      bool operator==(const camera& other) const;
      friend std::ostream& operator<<(std::ostream& os, const camera& c); 
