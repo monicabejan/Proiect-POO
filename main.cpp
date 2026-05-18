@@ -1,11 +1,17 @@
 #include <iostream>
 #include <thread>
-#include <chrono> //pentru sleep()
+#include <chrono>
+#include <memory>
 #include "camera.h"
 #include "hotel.h"
 #include "rezervare.h"
+#include "serviciu.h"
+#include "exceptii.h"
 int main()
 { 
+    Serviciu::inregistreazaObservator([](const std::string& msg){
+        std::cout<<"LOG "<<msg<<"\n";
+    });
     hotel* hotel=hotel::getInstanta();
 
     hotel->creeazaCamera<cameraSingle>(101, 1, 100);
@@ -27,12 +33,16 @@ int main()
         std::cout<<"2. Filtrare dupa pret \n";
         std::cout<<"3. Rezervare camere \n";
         std::cout<<"4. Istoric rezervari \n";
+        std::cout<<"5. Statistici \n";
+        std::cout<<"6. Tarife \n";
 
         std::cout<<"Optiune: ";
         if( std::cin>>optiune){
 
         try{
             switch(optiune){
+                case 0:
+                break;
 
                 case 1:
                 hotel->afisareCamereLibere();
@@ -42,6 +52,7 @@ int main()
                 double pretMax;
                 std::cout<<"\nPret maxim: ";
                 std::cin>>pretMax;
+                if(pretMax<=0) throw ExceptiePretInvalid(pretMax);
                 hotel->afisareCamereFiltrat(pretMax);
                 break;
                 }
@@ -59,9 +70,20 @@ int main()
                     std::cin>>nrCam;
 
                     if(nrCam)
-                        hotel->rezervaCameraInSesiune(sesiune, nrCam);
+                        {
+                            try{
+                                hotel->rezervaCameraInSesiune(sesiune, nrCam);
+                            }catch (const ExceptieCamera& e){
+                                const ExceptieHotel& eh=e;
+                                std::cout<<"Eroare: "<<eh.what()<<"\n";
+                            }
+                        }
                 } while(nrCam);
-                hotel->finalizeazaRezervare(sesiune);
+                try{
+                    hotel->finalizeazaRezervare(sesiune);
+                }catch( const ExceptieRezervareInvalida& e){
+                    std::cout<<"Eroare rezervare: "<<e.what()<<"\n";
+                }
                 
                 break;
                 }
@@ -70,19 +92,30 @@ int main()
                 hotel->afisareIstoricRezervari();
                 break;
 
-                default:
-                //throw ExceptieOptiuneInvalida();
+                case 5:
+                hotel->afisareStatistici();
                 break;
+
+                case 6:
+                hotel->afisareTarife();
+                break;
+
+                default:
+                throw ExceptieOptiuneInvalida();
+                
                 
             }
-        } catch(...){}
-        //catch (const ExceptiiHotel& e){
-        //     std::cout<<e.what()<<"\n";
-        // }
+        } catch(const ExceptieHotel& e){
+            std::cout<<"Exceptie "<<e.what()<<"\n";
+        }catch(const std::exception& e){
+            std::cout<<"Exceptie std "<<e.what()<<"\n";
+        }
         }
         if(optiune)
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
         
     } while ( optiune);
+    std::cout<<"La revedere"<<"\n";
+    return 0;
 }
