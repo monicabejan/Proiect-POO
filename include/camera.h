@@ -11,7 +11,7 @@ protected:
     bool status;
 public:
     camera( int nr, int et, double p);
-    camera(const camera& other);
+    camera(const camera& other)=default;
     camera& operator=(const camera& other);
     virtual ~camera() =default;
 

@@ -84,5 +84,5 @@ int main()
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
         
-    } while ( (std::cin >> optiune)&& optiune);
+    } while ( optiune);
 }
