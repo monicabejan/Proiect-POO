@@ -13,7 +13,7 @@ public:
     camera( int nr, int et, double p);
     camera(const camera& other);
     camera& operator=(const camera& other);
-    virtual ~camera();
+    virtual ~camera() =default;
 
     virtual void afisareDetalii (std::ostream& os) const =0;
     virtual void citesteDetalii (std::istream& is)=0; 
