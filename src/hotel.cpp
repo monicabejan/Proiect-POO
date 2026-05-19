@@ -1,4 +1,5 @@
 #include "hotel.h"
+#include "angajat.h"
 #include "exceptii.h"
 #include <vector>
 #include <algorithm>
@@ -30,6 +31,11 @@ void hotel::afisareCamereLibere() const{
         std::cout<<"Nicio camera disponibila\n";
 
 }
+void hotel::afisareToateCamerele() const{
+    std::cout<<"\nTOATE CAMERELE\n";
+    for(const auto& c : camere)
+    std::cout<<*c<<"\n";
+}
 
 void hotel::afisareCamereFiltrat(double pretMax) const{
     std::cout<<"\nCamere disponibile sub "<<pretMax<<" RON\n";
@@ -58,10 +64,7 @@ void hotel::afisareStatistici() const{
     long libere=std::count_if(camere.begin(), camere.end(), [](const std::shared_ptr<camera>&c) {return !c->esteOcupata();});
     std::cout<<"Camere libere: "<<libere<<"\n";
     std::cout<<"Total rezervari: "<<istoricRezervari.size()<<"\n";
-
-    double venit=0;
-    std::for_each(istoricRezervari.begin(),istoricRezervari.end(), [&venit](const rezervare& r){venit+=r.calculeazaTotal();});
-    std::cout<<"Venit total: "<<venit<<" RON\n";
+    //total angajati
 }
 
 std::shared_ptr<camera> hotel::getCameraByNr(int nr) const{
@@ -110,6 +113,12 @@ void hotel::afisareIstoricRezervari() const{
     }
 }
 
+void hotel::afisareTotalIncasari() const{
+    double total=0;
+    std::for_each(istoricRezervari.begin(), istoricRezervari.end(), [&total](const rezervare &r) {total+=r.calculeazaTotal();});
+    std::cout<<"\nTotal incasari: "<<total<<" RON\n";
+}
+
 std::vector<std::shared_ptr<camera>> hotel::camereOrdonateDupaPret() const {
     std::vector<std::shared_ptr<camera>> sortate(camere);
     std::sort(sortate.begin(), sortate.end(), [](const std::shared_ptr<camera>& a,const std::shared_ptr<camera>& b) {
@@ -117,4 +126,36 @@ std::vector<std::shared_ptr<camera>> hotel::camereOrdonateDupaPret() const {
 
     } );
     return sortate;
+}
+
+void hotel::rezervaCamera(int nr){
+    auto cam=getCameraByNr(nr);
+    if(!cam) throw ExceptieCamera(nr, "nu exista");
+    cam->setOcupata(true);
+}
+void hotel::elibereazaCamera(int nr){
+    auto cam=getCameraByNr(nr);
+    if(!cam) throw ExceptieCamera(nr, "nu exista");
+    cam->setOcupata(false);
+
+
+}
+void hotel::adaugaAngajat(std::shared_ptr<Angajat>a){
+    angajati.push_back(a);
+}
+Angajat* hotel::gasesteAngajat(const std::string& username, const std::string& parola) const{
+    for(const auto& a : angajati)
+        if(a->getUsername()==username && a->verificaParola(parola))
+        return a.get();
+    return nullptr;
+}
+
+void hotel::afisareAngajati() const{
+    if(angajati.empty()){
+        std::cout<<"\nNiciun angajat inregistrat\n";
+        return;
+    }
+    std::cout<<"\nANGAJATI\n";
+    for(const auto &a : angajati)
+        std::cout<<*a<<"\n";
 }
