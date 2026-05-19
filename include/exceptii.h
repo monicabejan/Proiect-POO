@@ -35,4 +35,15 @@ class ExceptieOptiuneInvalida: public ExceptieHotel{
     public:
     ExceptieOptiuneInvalida(): ExceptieHotel("Optiune invalida"){}
 };
+
+class ExceptieUsernameDuplicat: public std::exception
+{
+    std::string mesaj;
+    public:
+    ExceptieUsernameDuplicat(const std::string& user): mesaj("Username-ul "+user+" este luat deja"){}
+    const char* what() const noexcept override{
+        return mesaj.c_str();
+    }
+};
+
 #endif

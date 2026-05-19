@@ -141,6 +141,11 @@ void hotel::elibereazaCamera(int nr){
 
 }
 void hotel::adaugaAngajat(std::shared_ptr<Angajat>a){
+    for(const auto& ang : angajati){
+        if(ang->getUsername() == a->getUsername()){
+            throw ExceptieUsernameDuplicat(a->getUsername());
+        }
+    }
     angajati.push_back(a);
 }
 Angajat* hotel::gasesteAngajat(const std::string& username, const std::string& parola) const{
