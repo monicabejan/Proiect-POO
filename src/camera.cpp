@@ -2,6 +2,7 @@
 #include "exceptii.h"
 
 camera::camera(int nr, int et, double p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
+camera::camera(const camera& other) : nrCamera(other.nrCamera), etaj(other.etaj), pret(other.pret), status(other.status) {}
 camera& camera::operator=(const camera& other){
     if(this!=&other){
         nrCamera=other.nrCamera;
@@ -11,7 +12,7 @@ camera& camera::operator=(const camera& other){
     }
     return *this;
 }
-
+camera::~camera() {}
 
 bool camera::operator==(const camera& other) const{
     return this->nrCamera==other.nrCamera;

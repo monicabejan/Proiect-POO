@@ -7,6 +7,94 @@
 #include "rezervare.h"
 #include "serviciu.h"
 #include "exceptii.h"
+#include "angajat.h"
+
+void meniuVizitator(hotel* h){
+    int optiune=0;
+    do{
+        std::cout<<"\nMENIU VIZITATOR\n";
+        std::cout<<"0. Inapoi\n";
+        std::cout<<"1. Camere disponibile\n";
+        std::cout<<"2. Filtrare dupa pret\n";
+        std::cout<<"3. Rezervare\n";
+        std::cout<<"Optiune: ";
+
+        if(std::cin>>optiune){
+            try{
+                switch(optiune){
+                    case 0:
+                    break;
+
+                    case 1:
+                    h->afisareCamereLibere();
+                    break;
+
+                    case 2:{
+                        double pretMax;
+                        std::cout<<"\nPret maxim: ";
+                        std::cin>>pretMax;
+                        if(pretMax<=0) throw ExceptiePretInvalid(pretMax);
+                        h->afisareCamereFiltrat(pretMax);
+                        break;
+                    }
+                    case 3:{
+                        std::string nume;
+                        std::cout<<"\nNume: ";
+                        std::cin>>nume;
+                        rezervare sesiune(nume);
+                        int nrCam;
+                        do{
+                            h->afisareCamereLibere();
+                            std::cout<<"\nNr. camera de rezervat (0 pentru finalizare): ";
+                            std::cin>>nrCam;
+                            if(nrCam){
+                                try{
+                                    h->rezervaCameraInSesiune(sesiune, nrCam);
+                                }catch(const ExceptieCamera& e){
+                                    const ExceptieHotel& eh=e;
+                                    std::cout<<"\nEroare "<<eh.what()<<"\n";
+                                }
+                            }
+                        }while(nrCam);
+                        try{
+                            h->finalizeazaRezervare(sesiune);                     }                   }
+                        }catch( const ExceptieRezervareInvalida& e){
+                            std::cout<<"\nEroare "<<e.what()<<"\n";
+                        }
+                        break;
+            
+                    default:
+                    throw ExceptieOptiuneInvalida();
+                    }
+
+            }catch(const ExceptieHotel& e) {
+                std::cout<<"\nEroare "<<e.what()<<"\n";
+            }
+    }while(optiune);
+}
+
+
+void loginAngajat(hotel *h){
+    std::string user, parola;
+    std::cout<<"\nUsername: ";
+    std::cin>>user;
+    std::cout<<"\nParola: ";
+    std::cin>>parola;
+
+    Angajat* a=h->gasesteAngajat(user, parola);
+    if(!a){
+        std::cout<<"\nUsername sau parola incorecte\n";
+        return;
+    }
+    std::cout<<"\n"<<a->getNume()<<" "<<a->getRol()<<" Start pontaj";
+    auto start=std::chrono::steady_clock::now();
+    a->afiseazaMeniu(h);
+    auto stop=std::chrono::steady_clock::now();
+    auto sec=std::chrono::duration_cast<std::chrono::seconds>(stop-start).count();
+    std::cout<<"\nPontaj: "<<a->getNume()<<" "<<sec/3600<<"h "<<(sec%3600)/60<<"m "<<sec%60<<"s\n";
+
+    }
+
 int main()
 { 
     Serviciu::inregistreazaObservator([](const std::string& msg){
@@ -27,14 +115,11 @@ int main()
 
     int optiune=0;
     do{
-        std::cout<<"MENIU INTERACTIV \n";
+        std::cout<<"HOTEL \n";
         std::cout<<"0. Exit \n";
-        std::cout<<"1. Vizualizare camere disponibile \n";
-        std::cout<<"2. Filtrare dupa pret \n";
-        std::cout<<"3. Rezervare camere \n";
-        std::cout<<"4. Istoric rezervari \n";
-        std::cout<<"5. Statistici \n";
-        std::cout<<"6. Tarife \n";
+        std::cout<<"1. Continua ca vizitator \n";
+        std::cout<<"2. Login angajat \n";
+        
 
         std::cout<<"Optiune: ";
         if( std::cin>>optiune){
@@ -45,59 +130,11 @@ int main()
                 break;
 
                 case 1:
-                hotel->afisareCamereLibere();
+                meniuVizitator(hotel);
                 break;
 
-                case 2:{
-                double pretMax;
-                std::cout<<"\nPret maxim: ";
-                std::cin>>pretMax;
-                if(pretMax<=0) throw ExceptiePretInvalid(pretMax);
-                hotel->afisareCamereFiltrat(pretMax);
-                break;
-                }
-                
-                case 3:{
-                std::string nume;
-                std::cout<<"\nNume client: ";
-                std::cin>>nume;
-
-                rezervare sesiune(nume);
-                int nrCam;
-                do{
-                    hotel->afisareCamereLibere();
-                    std::cout<<"\nNr camera de rezervat (0 pentru finalizare): ";
-                    std::cin>>nrCam;
-
-                    if(nrCam)
-                        {
-                            try{
-                                hotel->rezervaCameraInSesiune(sesiune, nrCam);
-                            }catch (const ExceptieCamera& e){
-                                const ExceptieHotel& eh=e;
-                                std::cout<<"Eroare: "<<eh.what()<<"\n";
-                            }
-                        }
-                } while(nrCam);
-                try{
-                    hotel->finalizeazaRezervare(sesiune);
-                }catch( const ExceptieRezervareInvalida& e){
-                    std::cout<<"Eroare rezervare: "<<e.what()<<"\n";
-                }
-                
-                break;
-                }
-
-                case 4:
-                hotel->afisareIstoricRezervari();
-                break;
-
-                case 5:
-                hotel->afisareStatistici();
-                break;
-
-                case 6:
-                hotel->afisareTarife();
+                case 2:
+                loginAngajat(hotel);
                 break;
 
                 default:
@@ -105,17 +142,17 @@ int main()
                 
                 
             }
-        } catch(const ExceptieHotel& e){
-            std::cout<<"Exceptie "<<e.what()<<"\n";
         }catch(const std::exception& e){
             std::cout<<"Exceptie std "<<e.what()<<"\n";
-        }
+        
         }
         if(optiune)
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
         
-    } while ( optiune);
-    std::cout<<"La revedere"<<"\n";
+    } 
+    
+}while ( optiune);
+std::cout<<"La revedere"<<"\n";
     return 0;
 }
