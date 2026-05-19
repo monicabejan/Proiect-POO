@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <numeric>
 
-Angajat::Angajat(const std::string& n, const std::string& user, const std::string& p, double sal) {}
+Angajat::Angajat(const std::string& n, const std::string& user, const std::string& p, double sal): nume(n), username(user), parola(p), salariu(sal) {}
 Angajat::Angajat(const Angajat& other) : nume(other.nume), username(other.username), parola(other.parola), salariu(other.salariu) {}
 Angajat& Angajat::operator=(const Angajat& other){
     if(this!=&other){
@@ -106,7 +106,7 @@ void AngajatFrontDesk::afiseazaMeniu(hotel *h){
                      break;
 
                      case 4:
-                    // h->afisareTotalIncasari();
+                     h->afisareTotalIncasari();
                      break;
                      
                      default:
@@ -130,7 +130,7 @@ AngajatHousekeeping& AngajatHousekeeping::operator=(const AngajatHousekeeping& o
     return *this;
 }
 void AngajatHousekeeping::marcheazaInCuratenie(hotel* h, int nrCamera){
-    //h->ocupaCamera(nrCamera);
+    h->rezervaCamera(nrCamera);
     ++nrCamereAsignate;
 }
 
@@ -167,7 +167,7 @@ void AngajatHousekeeping::afiseazaMeniu(hotel *h){
                         int nr;
                         std::cout<<"\nNr. camera: ";
                         std::cin>>nr;
-                        //h->elibereazaCamera(nr);
+                        h->elibereazaCamera(nr);
                         break;
                     }
                     default:
@@ -211,7 +211,7 @@ void Manager::afiseazaMeniu(hotel* h){
                     break;
 
                     case 2:
-                  //  h->afisareAngajati();
+                    h->afisareAngajati();
                     break;
 
                     case 3:
@@ -305,17 +305,17 @@ void Admin::creeazaAngajatInteractiv(hotel* h){
 
     switch(rol){
         case 1:
-       // h->adaugaAngajat(std::make_shared<AngajatFrontDesk>(nume, user, parola, salariu));
+        h->adaugaAngajat(std::make_shared<AngajatFrontDesk>(nume, user, parola, salariu));
         std::cout<<"\n"<<nume<<" lucreaza acum la Front Desk\n";
         break;
 
         case 2:
-       // h->adaugaAngajat(std::make_shared<AngajatHousekeeping>(nume, user, parola, salariu));
+        h->adaugaAngajat(std::make_shared<AngajatHousekeeping>(nume, user, parola, salariu));
         std::cout<<nume<<" lucreaza acum la Housekeeping\n";
         break;
 
         case 3:
-        //adaugaAngajat(std::make_shared<Manager>(nume, user, parola, salariu));
+        h->adaugaAngajat(std::make_shared<Manager>(nume, user, parola, salariu));
         std::cout<<nume<<" e acum Manager\n";
 
         default:
@@ -354,7 +354,7 @@ void Admin::afiseazaMeniu(hotel* h){
                 break;
 
                 case 4:
-                //afisareTotalIncasari();
+                h->afisareTotalIncasari();
                 break;
 
                 default:

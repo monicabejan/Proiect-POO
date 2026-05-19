@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include "hotel.h"
+class hotel;
 
 class Angajat{
     protected:
