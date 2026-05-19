@@ -179,3 +179,189 @@ void AngajatHousekeeping::afiseazaMeniu(hotel *h){
         }
     }while(optiune);
 }
+
+Manager::Manager(const std::string& n, const std::string& user, const std::string& p, double sal):
+Angajat(n, user, p, sal), nrAngajatiSupervizati(0) {}
+Manager::Manager(const Manager& other): Angajat(other), nrAngajatiSupervizati(other.nrAngajatiSupervizati) {}
+Manager& Manager::operator=(const Manager& other){
+    if(this!=&other){
+        Angajat::operator=(other);
+        nrAngajatiSupervizati=other.nrAngajatiSupervizati;
+    }
+    return *this;
+}
+void Manager::afiseazaMeniu(hotel* h){
+    int optiune =0;
+    do{
+        std::cout<<"\nMANAGER\n";
+        std::cout<<"0. Logout\n";
+        std::cout<<"1. Istoric rezervari\n";
+        std::cout<<"2. Lista angajati\n"; //pontaje?
+        std::cout<<"3. Statistici\n";
+        std::cout<<"Optiune: ";
+
+        if(std::cin>>optiune){
+            try{
+                switch(optiune){
+                    case 0:
+                    break;
+
+                    case 1:
+                    h->afisareIstoricRezervari();
+                    break;
+
+                    case 2:
+                  //  h->afisareAngajati();
+                    break;
+
+                    case 3:
+                    h->afisareStatistici();
+                    break;
+
+                    default:
+                    std::cout<<"\nOptiune invalida\n";
+                }
+            }catch(const ExceptieHotel& e){
+                std::cout<<"\nEroare "<<e.what()<<" ";
+            }
+        }
+
+    }while(optiune);
+}
+
+
+Admin::Admin(const std::string& n, const std::string& user, const std::string& p, double sal) : Angajat(n, user, p, sal) {}
+Admin::Admin(const Admin& other): Angajat(other) {}
+Admin& Admin::operator=(const Admin& other) {
+    if(this!=&other){
+        Angajat::operator=(other);
+    }
+    return *this;
+}
+void Admin::creeazaCameraInteractiv(hotel* h){
+    std::cout<<"\nTip camera: \n";
+    std::cout<<"1. Single\n";
+    std::cout<<"2. Double\n";
+    std::cout<<"3. Penthouse\n";
+    std::cout<<"Optiune: ";
+
+    int tip;
+    std::cin>>tip;
+
+    int nr, etaj;
+    double pret;
+
+    std::cout<<"\nNr. camera: "; std::cin>>nr;
+    std::cout<<"\nEtaj: "; std::cin>>etaj;
+    std::cout<<"\nPret: "; std::cin>>pret;
+    if(pret<=0) throw ExceptiePretInvalid(pret);
+
+    switch(tip){
+        case 1:
+        h->creeazaCamera<cameraSingle>(nr, etaj, pret);
+        std::cout<<"\nA fost creata camera "<<nr<<"\n";
+        break;
+
+        case 2:{ 
+        std::string config;
+        std::cout<<"\nConfiguratie (Twin/Matrimonial): ";
+        std::cin>>config;
+        h->creeazaCamera<cameraDouble>(nr, etaj, config, pret);
+        std::cout<<"\nA fost creata camera "<<nr<<"\n";
+        break;
+        }
+        case 3:{
+            int nrDorm;
+            std::cout<<"\nNr. dormitoare: ";
+            std::cin>>nrDorm;
+            h->creeazaCamera<penthouse>(nr, etaj, nrDorm, pret);
+            std::cout<<"\nA fost creat Penthouse "<<nr;
+            break;
+        }
+        default:
+        std::cout<<"Invalid";
+    }
+
+}
+
+void Admin::creeazaAngajatInteractiv(hotel* h){
+    std::cout<<"\nRol angajat: "; 
+    std::cout<<"\n1. Front desk \n";
+    std::cout<<"2. Housekeeping\n";
+    std::cout<<"3. Manager\n";
+    std::cout<<"Optiune: ";
+
+    int rol;
+    std::cin>>rol;
+
+    std::string nume, user, parola;
+    double salariu;
+    std::cout<<"\nNume: "; std::cin>>nume;
+    std::cout<<"\nUsername: "; std::cin>>user;
+    std::cout<<"\nParola: "; std::cin>>parola;
+    std::cout<<"\nSalariu: "; std::cin>>salariu;
+
+    //if(salariu<=0) throw ExceptionPretInvalid(salariu);
+
+    switch(rol){
+        case 1:
+       // h->adaugaAngajat(std::make_shared<AngajatFrontDesk>(nume, user, parola, salariu));
+        std::cout<<"\n"<<nume<<" lucreaza acum la Front Desk\n";
+        break;
+
+        case 2:
+       // h->adaugaAngajat(std::make_shared<AngajatHousekeeping>(nume, user, parola, salariu));
+        std::cout<<nume<<" lucreaza acum la Housekeeping\n";
+        break;
+
+        case 3:
+        //adaugaAngajat(std::make_shared<Manager>(nume, user, parola, salariu));
+        std::cout<<nume<<" e acum Manager\n";
+
+        default:
+        std::cout<<"\nInvalid\n";
+    }
+}
+
+void Admin::afiseazaMeniu(hotel* h){
+    int optiune=0;
+    do{
+        std::cout<<"\nADMINISTRATOR\n";
+        std::cout<<"0. Logout\n";
+        std::cout<<"1. Adauga camera\n";
+        std::cout<<"2. Adauga angajat\n";
+        std::cout<<"3. Lista angajati\n";
+        std::cout<<"4. Total incasari\n";
+        std::cout<<"Optiune: ";
+        
+        std::cin>>optiune;
+
+        try{
+            switch(optiune){
+                case 0:
+                break;
+
+                case 1:
+                creeazaCameraInteractiv(h);
+                break;
+
+                case 2:
+                creeazaAngajatInteractiv(h);
+                break;
+
+                case 3:
+                //afisareAngajati();
+                break;
+
+                case 4:
+                //afisareTotalIncasari();
+                break;
+
+                default:
+                std::cout<<"Invalid";
+            }
+        }catch(const std::exception& e){
+            std::cout<<"\nEroare: "<<e.what()<<"\n";
+        }
+    }while(optiune);
+}
