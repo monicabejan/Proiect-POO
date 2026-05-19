@@ -1,0 +1,9 @@
+Single 101 1 100 0
+Single 102 1 100 0
+Single 103 1 150 0
+Double 105 1 200 0 Twin
+Double 106 2 250 0 Matrimonial
+Penthouse 201 2 550 1
+Penthouse 202 2 500 1
+Single 100 4 200 0
+Penthouse 203 2 100 1

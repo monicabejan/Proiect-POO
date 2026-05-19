@@ -2,6 +2,7 @@
 #include "../include/angajat.h"
 #include "../include/exceptii.h"
 #include "../include/serviciu.h"
+#include "../include/hotel.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -150,17 +151,31 @@ void loginAngajat(hotel *h){
     std::cout<<"\nParola: ";
     std::cin>>parola;
 
-    Angajat* a=h->gasesteAngajat(user, parola);
-    if(!a){
-        std::cout<<"\nUsername sau parola incorecte\n";
+    const std::string ADMIN_USER = "admin";
+    const std::string ADMIN_PWD= "admin123";
+
+    Angajat* staffLogat=nullptr;
+    std::unique_ptr<Admin> adminTemporar = nullptr;
+
+    if(user == ADMIN_USER && parola== ADMIN_PWD){
+        adminTemporar=std::make_unique<Admin>("Administrator", ADMIN_USER, ADMIN_PWD, 0.0);
+        staffLogat=adminTemporar.get();
+    }
+    else{
+        staffLogat=h->gasesteAngajat(user, parola);
+    }
+    if(!staffLogat) {
+        std::cout<<"\n Username sau parola incorecte\n";
         return;
     }
-    std::cout<<"\n"<<a->getNume()<<" "<<a->getRol()<<" Start pontaj";
+
+   
+    std::cout<<"\n"<<staffLogat->getNume()<<" "<<staffLogat->getRol()<<" Start pontaj";
     auto start=std::chrono::steady_clock::now();
-    a->afiseazaMeniu(h);
+    staffLogat->afiseazaMeniu(h);
     auto stop=std::chrono::steady_clock::now();
     auto sec=std::chrono::duration_cast<std::chrono::seconds>(stop-start).count();
-    std::cout<<"\nPontaj: "<<a->getNume()<<" "<<sec/3600<<"h "<<(sec%3600)/60<<"m "<<sec%60<<"s\n";
+    std::cout<<"\nPontaj: "<<staffLogat->getNume()<<" "<<sec/3600<<"h "<<(sec%3600)/60<<"m "<<sec%60<<"s\n";
 
 }
 
@@ -180,6 +195,7 @@ void pornesteAplicatia(hotel* hotel){
         try{
             switch(optiune){
                 case 0:
+                hotel->salveazaDatele();
                 break;
 
                 case 1:

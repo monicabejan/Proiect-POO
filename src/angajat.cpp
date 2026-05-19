@@ -1,10 +1,34 @@
-#include "../include/hotel.h"
 #include "../include/angajat.h"
+#include "../include/hotel.h"
 #include "../include/exceptii.h"
 #include "../include/rezervare.h"
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+
+#include <sstream>
+#include <memory>
+
+std::shared_ptr<Angajat> Angajat::creeazaDinLinie(const std::string& linie){
+    if(linie.empty()) return nullptr;
+
+    std::stringstream ss(linie);
+    std::string rol, nume, user, parola;
+    double salariu;
+
+    ss>>rol>>user>>parola>>salariu;
+
+    ss.ignore();
+    std::getline(ss, nume);
+
+    if(rol=="FrontDesk")
+        return std::make_shared<AngajatFrontDesk>(nume, user, parola, salariu);
+    else if(rol=="Housekeeping")
+        return std::make_shared<AngajatHousekeeping>(nume, user, parola, salariu);
+    else if(rol=="Manager")
+        return std::make_shared<Manager>(nume, user, parola, salariu);
+    return nullptr;
+}
 
 Angajat::Angajat(const std::string& n, const std::string& user, const std::string& p, double sal): nume(n), username(user), parola(p), salariu(sal) {}
 Angajat::Angajat(const Angajat& other) : nume(other.nume), username(other.username), parola(other.parola), salariu(other.salariu) {}
@@ -302,7 +326,7 @@ void Admin::creeazaAngajatInteractiv(hotel* h){
     std::cout<<"\nSalariu: "; std::cin>>salariu;
 
     //if(salariu<=0) throw ExceptionPretInvalid(salariu);
-
+    try{
     switch(rol){
         case 1:
         h->adaugaAngajat(std::make_shared<AngajatFrontDesk>(nume, user, parola, salariu));
@@ -317,10 +341,14 @@ void Admin::creeazaAngajatInteractiv(hotel* h){
         case 3:
         h->adaugaAngajat(std::make_shared<Manager>(nume, user, parola, salariu));
         std::cout<<nume<<" e acum Manager\n";
+        break;
 
         default:
         std::cout<<"\nInvalid\n";
     }
+}catch(const std::exception& e){
+    std::cout<<"\nWarning "<<e.what()<<"\n";
+}
 }
 
 void Admin::afiseazaMeniu(hotel* h){

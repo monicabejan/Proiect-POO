@@ -1,5 +1,39 @@
 #include "camera.h"
 #include "exceptii.h"
+#include <sstream>
+#include <memory>
+
+std::shared_ptr<camera> camera::creeazaDinLinie(const std::string& linie){
+    if(linie.empty()) return nullptr;
+
+    std::stringstream ss(linie);
+    std::string tip;
+    int nr, et, status;
+    double pret;
+
+    ss>>tip>>nr>>et>>pret>>status;
+
+    std::shared_ptr<camera> cam=nullptr;
+    if(tip=="Single")
+        cam=std::make_shared<cameraSingle>(nr, et, pret);
+    else if(tip=="Double"){
+        std::string config;
+        ss>>config;
+        cam=std::make_shared<cameraDouble>(nr, et, config, pret);
+    }
+    else if(tip=="Penthouse"){
+        int nrDorm;
+        ss>>nrDorm;
+        cam=std::make_shared<penthouse>(nr, et, nrDorm, pret);
+    }
+
+    if(cam && status ){
+        cam->setOcupata(true);
+    }
+    return cam;
+}
+
+
 
 camera::camera(int nr, int et, double p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
 camera::camera(const camera& other) : nrCamera(other.nrCamera), etaj(other.etaj), pret(other.pret), status(other.status) {}
@@ -48,7 +82,6 @@ cameraSingle& cameraSingle::operator=(const cameraSingle& other){
         camera::operator=(other);
     return *this;
 }
-cameraSingle::~cameraSingle() {}
 
 void cameraSingle::afisareDetalii(std::ostream& os) const {
     os<<" Single";
@@ -65,7 +98,6 @@ cameraDouble& cameraDouble::operator =(const cameraDouble& other){
     }
     return *this;
 }
-cameraDouble::~cameraDouble(){}
 
 
 void cameraDouble::afisareDetalii (std::ostream& os) const{
@@ -83,7 +115,6 @@ penthouse& penthouse::operator=(const penthouse& other) {
     }
     return *this;
 }
-penthouse::~penthouse() {}
 
 void penthouse::afisareDetalii(std::ostream& os) const {
     os<<" Penthouse "

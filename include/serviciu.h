@@ -13,7 +13,7 @@ class Serviciu{
     static std::vector<std::function<void(const std::string&)>> observatori;
     public:
     Serviciu(const std::string& den, double pret);
-    virtual ~Serviciu();
+    virtual ~Serviciu()=default;
 
     virtual void executa() const=0;
     virtual double calculeazaCost() const;
@@ -36,7 +36,7 @@ class ServiciuLaundry:public Serviciu{
     ServiciuLaundry(int nrPiese, double pretPerPiesa=15.0);
     ServiciuLaundry(const ServiciuLaundry& other);
     ServiciuLaundry& operator=(const ServiciuLaundry& other);
-    ~ServiciuLaundry() override;
+    ~ServiciuLaundry() override=default;
 
     void executa() const override;
     double calculeazaCost() const override;
@@ -51,7 +51,7 @@ class ServiciuRoomService:public Serviciu{
     ServiciuRoomService(const std::string& comanda, bool urgent=false, double pret=50.0);
     ServiciuRoomService(const ServiciuRoomService& other);
     ServiciuRoomService& operator=(const ServiciuRoomService& other);
-    ~ServiciuRoomService() override;
+    ~ServiciuRoomService() override =default;
 
     void executa() const override;
     double calculeazaCost() const override;
@@ -66,7 +66,7 @@ class ServiciuSpa :public Serviciu{
     ServiciuSpa(int durata, double pretPerMinut=3.0);
     ServiciuSpa(const ServiciuSpa& other);
     ServiciuSpa& operator=(const ServiciuSpa& other);
-    ~ServiciuSpa() override;
+    ~ServiciuSpa() override = default;
 
     void executa() const override;
     double calculeazaCost() const override;

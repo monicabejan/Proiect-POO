@@ -10,12 +10,13 @@
 #include "rezervare.h"
  class Angajat;
 class hotel {
-    static hotel* instanta;
     std::vector<std::shared_ptr<camera>> camere;
     std::vector<rezervare> istoricRezervari;
     std::vector<std::shared_ptr<Angajat>> angajati;
 
     hotel() {}
+    hotel(const hotel&) = delete;
+    hotel& operator=(const hotel&) = delete;
 public:
     static hotel* getInstanta();
 
@@ -38,6 +39,8 @@ public:
     Angajat* gasesteAngajat(const std::string& username, const std::string& parola) const;
     void afisareAngajati() const;
     
+    void incarcaDatele();
+    void salveazaDatele() const;
 
     template <typename T, typename... Args>
     void creeazaCamera(Args&&... args){

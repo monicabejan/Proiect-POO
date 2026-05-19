@@ -4,11 +4,16 @@
 #include <iostream>
 #include <numeric>
 
-rezervare::rezervare(const std::string& nume) : numeClient(nume){}
+int rezervare::contorID=0;
 
-rezervare::rezervare(const rezervare& other) : numeClient(other.numeClient), camereRezervate(other.camereRezervate),serviciiAditionale(other.serviciiAditionale) {}
+rezervare::rezervare(const std::string& nume) : numeClient(nume){
+    idRezervare=++contorID;
+}
+
+rezervare::rezervare(const rezervare& other) : idRezervare(other.idRezervare), numeClient(other.numeClient), camereRezervate(other.camereRezervate),serviciiAditionale(other.serviciiAditionale) {}
 rezervare& rezervare::operator=(const rezervare& other){
     if(this!=&other){
+        idRezervare=other.idRezervare;
         numeClient=other.numeClient;
         camereRezervate=other.camereRezervate;
         serviciiAditionale=other.serviciiAditionale;
@@ -43,7 +48,8 @@ double rezervare::calculeazaTotal() const{
 }
 
 void rezervare::afiseazaSumar() const{
-    std::cout<<"Client: "<<numeClient<<std::endl;
+    std::cout<<"\nRezervarea #"<<idRezervare;
+    std::cout<<"\nClient: "<<numeClient<<std::endl;
     std::cout<<"Camere rezervate: ";
     for(const auto& c : camereRezervate)
         std::cout<<c->getNr()<<" ";

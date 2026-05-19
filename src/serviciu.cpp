@@ -10,7 +10,6 @@ Serviciu::Serviciu(const std::string& den, double pret): denumire(den), pretServ
     if(pret<0)
         throw ExceptiePretInvalid(pret);
 }
-Serviciu::~Serviciu() {}
 
 double Serviciu::calculeazaCost() const { return pretServiciu;}
 bool Serviciu::operator==(const Serviciu& other) const{
@@ -43,7 +42,6 @@ ServiciuLaundry& ServiciuLaundry::operator=(const ServiciuLaundry& other){
 
 }
 
-ServiciuLaundry::~ServiciuLaundry() {}
 
 void ServiciuLaundry::executa() const {
     std::cout<<"Se proceseaza "<<nrPiese<<" piese la spalatorie.\n";
@@ -68,7 +66,6 @@ ServiciuRoomService& ServiciuRoomService::operator=(const ServiciuRoomService& o
     return *this;
 }
 
-ServiciuRoomService::~ServiciuRoomService() {}
 
 void ServiciuRoomService::executa() const{
     std::cout<<"Room Service "<<(urgent ? "URGENT" : "")<<": "<<comanda<<"\n";
@@ -91,7 +88,6 @@ ServiciuSpa& ServiciuSpa::operator=(const ServiciuSpa& other){
     return *this;
 }
 
-ServiciuSpa::~ServiciuSpa() {}
 
 void ServiciuSpa::executa() const {
     std::cout<<"Sesiune Spa: "<<durataMasaj<<" minute.\n";

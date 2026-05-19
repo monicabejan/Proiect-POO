@@ -3,15 +3,16 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
 class hotel;
 
 class Angajat{
-    protected:
+protected:
     std::string nume;
     std::string username;
     std::string parola;
     double salariu;
-    public:
+public:
     Angajat(const std::string& nume, const std::string& user, const std::string& parola, double salariu);
     Angajat(const Angajat& other);
     Angajat& operator=(const Angajat& other);
@@ -22,6 +23,9 @@ class Angajat{
     const std::string& getNume() const;
     double getSalariu() const;
 
+    static std::shared_ptr<Angajat> creeazaDinLinie(const std::string& linie);
+    const std::string& getParola() const { return parola;}
+
     virtual std::string getRol() const = 0;
     virtual void afiseazaMeniu(hotel* h)=0;
 
@@ -29,6 +33,7 @@ class Angajat{
     friend std::istream& operator>>(std::istream& is, Angajat& a);
 
 };
+
 
 class AngajatFrontDesk: public Angajat {
     int nrCheckinuri;

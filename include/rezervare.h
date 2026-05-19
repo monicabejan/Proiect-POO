@@ -8,6 +8,8 @@
 #include "serviciu.h"
  
 class rezervare{
+    static int contorID;
+    int idRezervare;
     std::string numeClient;
     std::vector<std::shared_ptr<camera>>camereRezervate;
     std::vector<std::shared_ptr<Serviciu>> serviciiAditionale;
@@ -16,6 +18,8 @@ public:
     rezervare(const rezervare& other);
     rezervare& operator=(const rezervare& other);
     ~rezervare();
+
+    int getID() const{ return idRezervare;}
 
     const std::string& getNumeClient() const;
 
