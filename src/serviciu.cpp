@@ -6,12 +6,12 @@
 
 std::vector<std::function<void(const std::string&)>>Serviciu::observatori;
 
-Serviciu::Serviciu(const std::string& den, double pret): denumire(den), pretServiciu(pret){
+Serviciu::Serviciu(const std::string& den, Valuta<double> pret): denumire(den), pretServiciu(pret){
     if(pret<0)
         throw ExceptiePretInvalid(pret);
 }
 
-double Serviciu::calculeazaCost() const { return pretServiciu;}
+Valuta<double> Serviciu::calculeazaCost() const { return pretServiciu;}
 bool Serviciu::operator==(const Serviciu& other) const{
     return denumire==other.denumire;
 }
@@ -29,7 +29,7 @@ void Serviciu::notificaObservatori(const std::string& mesaj){
         obs(mesaj);
 }
 
-ServiciuLaundry::ServiciuLaundry(int nr, double pretPerPiesa):Serviciu("Laundry x"+std::to_string(nr), pretPerPiesa),nrPiese(nr) {}
+ServiciuLaundry::ServiciuLaundry(int nr, Valuta<double> pretPerPiesa):Serviciu("Laundry x"+std::to_string(nr), pretPerPiesa),nrPiese(nr) {}
 
 ServiciuLaundry::ServiciuLaundry(const ServiciuLaundry& other):Serviciu(other), nrPiese(other.nrPiese){}
 ServiciuLaundry& ServiciuLaundry::operator=(const ServiciuLaundry& other){

@@ -35,7 +35,7 @@ std::shared_ptr<camera> camera::creeazaDinLinie(const std::string& linie){
 
 
 
-camera::camera(int nr, int et, double p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
+camera::camera(int nr, int et, Valuta<double> p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
 camera::camera(const camera& other) : nrCamera(other.nrCamera), etaj(other.etaj), pret(other.pret), status(other.status) {}
 camera& camera::operator=(const camera& other){
     if(this!=&other){

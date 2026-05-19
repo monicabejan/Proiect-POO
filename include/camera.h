@@ -1,5 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
+#include "../include/valuta.h"
 #include <iostream>
 #include <string>
 #include <memory>
@@ -8,10 +9,10 @@ class camera{
 protected:
     int nrCamera;
     int etaj;
-    double pret;
+    Valuta<double> pret;
     bool status;
 public:
-    camera( int nr, int et, double p);
+    camera( int nr, int et, Valuta<double> p);
     camera(const camera& other);
     camera& operator=(const camera& other);
     virtual ~camera();
@@ -25,7 +26,7 @@ public:
 
      int getNr() const { return nrCamera;}
      int getEtaj() const {return etaj;}
-     double getPret() const { return pret;}
+     Valuta<double> getPret() const { return pret;}
      bool esteOcupata() const { return status;}
      void setOcupata(bool i) { status=i;}
      
@@ -35,11 +36,10 @@ public:
      friend std::istream& operator>>(std::istream& is, camera& c);
 
 };
-double operator+(const camera& a, const camera& b);
 
 class cameraSingle : public camera{
 public:
-    cameraSingle(int nr, int et, double p=150.0);
+    cameraSingle(int nr, int et, Valuta<double> p =Valuta<double>(150.0, "RON"));
     cameraSingle(const cameraSingle& other);
     cameraSingle& operator=(const cameraSingle& other);
     ~cameraSingle() override = default;
@@ -54,7 +54,7 @@ public:
 class cameraDouble : public camera {
     std::string tipConfiguratie;
 public:
-    cameraDouble(int nr, int et, const std::string& config, double p=250.0);
+    cameraDouble(int nr, int et, const std::string& config, Valuta<double> p =Valuta<double>(250.0, "RON"));
     cameraDouble(const cameraDouble& other);
     cameraDouble& operator=(const cameraDouble& other);
     ~cameraDouble() override = default;
@@ -71,7 +71,7 @@ public:
 class penthouse : public camera {
     int nrDormitoare;
 public:
-    penthouse(int nr, int et, int nrDorm, double p=500.0);
+    penthouse(int nr, int et, int nrDorm, Valuta<double> p =Valuta<double>(500.0, "RON"));
     penthouse(const penthouse& other);
     penthouse& operator=(const penthouse& other);
     ~penthouse() override = default;
