@@ -60,6 +60,7 @@ class Manager: public Angajat{
     public:
     Manager(const std::string& nume, const std::string& user, const std::string& parola, double salariu);
     Manager& operator=(const Manager& other);
+    Manager(const Manager& other);
 
     std::string getRol() const override {return "Manager";}
     void afiseazaMeniu(hotel* h) override;
@@ -74,6 +75,7 @@ class Admin:public Angajat{
     public:
     Admin(const std::string& nume, const std::string& user, const std::string& parola, double salariu);
     Admin& operator=(const Admin& other);
+    Admin(const Admin& other);
 
     std::string getRol() const override {return "Admin";}
     void afiseazaMeniu(hotel* h) override;

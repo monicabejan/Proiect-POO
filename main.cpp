@@ -57,20 +57,21 @@ void meniuVizitator(hotel* h){
                             }
                         }while(nrCam);
                         try{
-                            h->finalizeazaRezervare(sesiune);                     }                   }
+                            h->finalizeazaRezervare(sesiune);    
                         }catch( const ExceptieRezervareInvalida& e){
                             std::cout<<"\nEroare "<<e.what()<<"\n";
                         }
                         break;
-            
+                    }
                     default:
                     throw ExceptieOptiuneInvalida();
-                    }
-
+                    
+                }
             }catch(const ExceptieHotel& e) {
                 std::cout<<"\nEroare "<<e.what()<<"\n";
             }
-    }while(optiune);
+    }
+}while(optiune);
 }
 
 
@@ -93,7 +94,7 @@ void loginAngajat(hotel *h){
     auto sec=std::chrono::duration_cast<std::chrono::seconds>(stop-start).count();
     std::cout<<"\nPontaj: "<<a->getNume()<<" "<<sec/3600<<"h "<<(sec%3600)/60<<"m "<<sec%60<<"s\n";
 
-    }
+}
 
 int main()
 { 
@@ -138,21 +139,18 @@ int main()
                 break;
 
                 default:
-                throw ExceptieOptiuneInvalida();
-                
-                
+                throw ExceptieOptiuneInvalida();  
             }
-        }catch(const std::exception& e){
-            std::cout<<"Exceptie std "<<e.what()<<"\n";
+        }catch(const std::exception& e)
+           { std::cout<<"Exceptie std "<<e.what()<<"\n";}
         
-        }
+
         if(optiune)
             std::this_thread::sleep_for(std::chrono::seconds(2));
-
         
-    } 
-    
-}while ( optiune);
-std::cout<<"La revedere"<<"\n";
+
+}
+    }while ( optiune);
+    std::cout<<"La revedere"<<"\n";
     return 0;
 }
