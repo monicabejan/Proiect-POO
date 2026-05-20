@@ -31,7 +31,7 @@ void hotel::afisareCamereLibere() const{
         std::cout<<"Nicio camera disponibila\n";
 
 }
-void hotel::afisareToateCamerele() const{
+[[maybe_unused]] void hotel::afisareToateCamerele() const{
     std::cout<<"\nTOATE CAMERELE\n";
     for(const auto& c : camere)
     std::cout<<*c<<"\n";
@@ -51,7 +51,7 @@ void hotel::afisareCamereFiltrat(double pretMax) const{
         std::cout<<"Nicio camera disponibila sub acest pret. \n";
 }
 
-void hotel::afisareTarife() const{
+[[maybe_unused]] void hotel::afisareTarife() const{
     std::cout<<"\nTARIFE - PRET CRESCATOR\n";
     auto sortate=camereOrdonateDupaPret();
     for(const auto& c : sortate)

@@ -24,7 +24,7 @@ Angajat& Angajat::operator=(const Angajat& other){
 bool Angajat::verificaParola(const std::string& p) const{return parola == p;}
 const std::string& Angajat::getUsername() const { return username;}
 const std::string& Angajat::getNume() const { return nume;}
-double Angajat::getSalariu() const { return salariu;}
+[[maybe_unused]] double Angajat::getSalariu() const { return salariu;}
 
 std::ostream& operator<<(std::ostream& os, const Angajat& a){
     os<<a.getRol()<<" "<<a.nume<<" @"<<a.username;

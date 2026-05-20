@@ -13,10 +13,6 @@
 
 int main()
 { 
-    Serviciu::inregistreazaObservator([](const std::string& msg){
-        std::cout<<"LOG "<<msg<<"\n";
-    });
-
     hotel* hotel=hotel::getInstanta();
 
     hotel->creeazaCamera<cameraSingle>(101, 1, 100);

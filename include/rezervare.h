@@ -20,7 +20,7 @@ public:
     rezervare& operator=(const rezervare& other);
     ~rezervare();
 
-    int getID() const{ return idRezervare;}
+    [[maybe_unused]] int getID() const{ return idRezervare;}
 
     const std::string& getNumeClient() const;
 

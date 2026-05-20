@@ -56,7 +56,7 @@ cameraSingle& cameraSingle::operator=(const cameraSingle& other){
 void cameraSingle::afisareDetalii(std::ostream& os) const {
     os<<" Single";
 }
-void cameraSingle::citesteDetalii(std::istream& is) {}
+[[maybe_unused]] void cameraSingle::citesteDetalii(std::istream& is) {}
 
 
 cameraDouble::cameraDouble(int nr, int et, const std::string& config, double p) : camera(nr, et, p), tipConfiguratie(config) {}

@@ -26,7 +26,7 @@ rezervare& rezervare::operator=(const rezervare& other){
     return *this;
 }
 rezervare::~rezervare() {}
-const std::string& rezervare::getNumeClient() const{
+[[maybe_unused]] const std::string& rezervare::getNumeClient() const{
     return numeClient;
 }
 

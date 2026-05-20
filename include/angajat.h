@@ -24,7 +24,7 @@ public:
     double getSalariu() const;
 
     
-    const std::string& getParola() const { return parola;}
+    [[maybe_unused]] const std::string& getParola() const { return parola;}
 
     virtual std::string getRol() const = 0;
     virtual void afiseazaMeniu(hotel* h)=0;
@@ -45,7 +45,7 @@ class AngajatFrontDesk: public Angajat {
     std::string getRol() const override{ return "Front Desk";}
     void afiseazaMeniu(hotel *h) override;
     void inregistreazaCheckin() {++nrCheckinuri;}
-    int getNrCheckinuri() const { return nrCheckinuri;}
+    [[maybe_unused]] int getNrCheckinuri() const { return nrCheckinuri;}
 };
 
 class AngajatHousekeeping : public Angajat{
@@ -57,7 +57,7 @@ class AngajatHousekeeping : public Angajat{
     std::string getRol() const override {return "Housekeeping";}
     void afiseazaMeniu(hotel* h) override;
     void marcheazaInCuratenie(hotel* h, int nrCamera);
-    int getNrCamereAsignate() const {return nrCamereAsignate;}
+    [[maybe_unused]] int getNrCamereAsignate() const {return nrCamereAsignate;}
 };
 
 class Manager: public Angajat{
@@ -69,8 +69,8 @@ class Manager: public Angajat{
 
     std::string getRol() const override {return "Manager";}
     void afiseazaMeniu(hotel* h) override;
-    void setNrAngajati(int n) {nrAngajatiSupervizati=n;}
-    int getNrAngajati() const {return nrAngajatiSupervizati;}
+    [[maybe_unused]] void setNrAngajati(int n) {nrAngajatiSupervizati=n;}
+    [[maybe_unused]] int getNrAngajati() const {return nrAngajatiSupervizati;}
 };
 
 

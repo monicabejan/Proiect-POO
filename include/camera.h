@@ -24,7 +24,7 @@ public:
     virtual void citesteDetalii (std::istream& is)=0; 
 
      int getNr() const { return nrCamera;}
-     int getEtaj() const {return etaj;}
+     [[maybe_unused]] int getEtaj() const {return etaj;}
      double getPret() const { return pret;}
      bool esteOcupata() const { return status;}
      void setOcupata(bool i) { status=i;}
@@ -58,9 +58,9 @@ public:
     cameraDouble& operator=(const cameraDouble& other);
     ~cameraDouble() override = default;
 
-    std::string getTipString() const override { return "Double";}
+    [[maybe_unused]] std::string getTipString() const override { return "Double";}
 
-    std::string getTipConfiguratie() const {return tipConfiguratie;}
+    [[maybe_unused]] std::string getTipConfiguratie() const {return tipConfiguratie;}
 
     void afisareDetalii(std::ostream& os) const override;
     void citesteDetalii(std::istream& is) override;
@@ -77,7 +77,7 @@ public:
 
     std::string getTipString() const override { return "Penthouse";}
 
-    int getNrDormitoare() const{ return nrDormitoare;}
+    [[maybe_unused]] int getNrDormitoare() const{ return nrDormitoare;}
 
     void afisareDetalii(std::ostream& os) const override;
     void citesteDetalii(std::istream& is) override;

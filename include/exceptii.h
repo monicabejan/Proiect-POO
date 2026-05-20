@@ -14,7 +14,7 @@ class ExceptieCamera:public ExceptieHotel{
     int nrCamera;
 public:
     ExceptieCamera(int nr, const std::string& detaliu) : ExceptieHotel("Camera "+std::to_string(nr)+": "+detaliu), nrCamera(nr) {}
-    int getNrCamera() const {return nrCamera;}
+    [[maybe_unused]] int getNrCamera() const {return nrCamera;}
 
 };
 
@@ -22,7 +22,7 @@ class ExceptiePretInvalid: public ExceptieHotel{
     double pretIntrodus;
 public:
     explicit ExceptiePretInvalid(double p):ExceptieHotel("Pret invalid: "+ std::to_string(p)), pretIntrodus(p) {}
-    double getPretIntrodus() const { return pretIntrodus;}
+    [[maybe_unused]] double getPretIntrodus() const { return pretIntrodus;}
 };
 
 
