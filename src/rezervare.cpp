@@ -26,7 +26,8 @@ rezervare& rezervare::operator=(const rezervare& other){
     return *this;
 }
 rezervare::~rezervare() {}
-[[maybe_unused]] const std::string& rezervare::getNumeClient() const{
+// cppcheck-suppress unusedFunction
+const std::string& rezervare::getNumeClient() const{
     return numeClient;
 }
 

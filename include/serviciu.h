@@ -17,8 +17,8 @@ public:
 
     virtual double calculeazaCost() const;
     virtual std::string getTip() const=0;
-
-    [[maybe_unused]] const std::string& getDenumire() const { return denumire;}
+// cppcheck-suppress unusedFunction
+    const std::string& getDenumire() const { return denumire;}
     double getPret() const { return pretServiciu;}
 
     
@@ -38,7 +38,8 @@ class ServiciuLaundry:public Serviciu{
 
     double calculeazaCost() const override;
     std::string getTip() const override {return "Laundry";}
-    [[maybe_unused]] int getNrPiese() const{ return nrPiese;}
+    // cppcheck-suppress unusedFunction
+    int getNrPiese() const{ return nrPiese;}
 };
 
 class ServiciuRoomService:public Serviciu{
@@ -51,8 +52,8 @@ class ServiciuRoomService:public Serviciu{
 
     double calculeazaCost() const override;
     std::string getTip() const override{ return "Room Service";}
-
-    [[maybe_unused]] bool esteUrgent() const { return urgent;}
+// cppcheck-suppress unusedFunction
+    bool esteUrgent() const { return urgent;}
 };
 
 class ServiciuSpa :public Serviciu{
@@ -65,7 +66,8 @@ class ServiciuSpa :public Serviciu{
     double calculeazaCost() const override;
     std::string getTip() const override { return "Spa";}
 
-    [[maybe_unused]] int getDurata() const { return durataMasaj;}
+    // cppcheck-suppress unusedFunction
+    int getDurata() const { return durataMasaj;}
 };
 
 

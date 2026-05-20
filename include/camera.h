@@ -24,7 +24,8 @@ public:
     virtual void citesteDetalii (std::istream& is)=0; 
 
      int getNr() const { return nrCamera;}
-     [[maybe_unused]] int getEtaj() const {return etaj;}
+     // cppcheck-suppress unusedFunction
+     int getEtaj() const {return etaj;}
      double getPret() const { return pret;}
      bool esteOcupata() const { return status;}
      void setOcupata(bool i) { status=i;}
@@ -42,7 +43,7 @@ public:
     cameraSingle(const cameraSingle& other);
     cameraSingle& operator=(const cameraSingle& other);
     ~cameraSingle() override = default;
-
+    // cppcheck-suppress unusedFunction
     std::string getTipString() const override { return "Single";}
 
     void afisareDetalii(std::ostream& os) const override;
@@ -57,10 +58,10 @@ public:
     cameraDouble(const cameraDouble& other);
     cameraDouble& operator=(const cameraDouble& other);
     ~cameraDouble() override = default;
-
-    [[maybe_unused]] std::string getTipString() const override { return "Double";}
-
-    [[maybe_unused]] std::string getTipConfiguratie() const {return tipConfiguratie;}
+// cppcheck-suppress unusedFunction
+    std::string getTipString() const override { return "Double";}
+// cppcheck-suppress unusedFunction
+    std::string getTipConfiguratie() const {return tipConfiguratie;}
 
     void afisareDetalii(std::ostream& os) const override;
     void citesteDetalii(std::istream& is) override;
@@ -74,10 +75,10 @@ public:
     penthouse(const penthouse& other);
     penthouse& operator=(const penthouse& other);
     ~penthouse() override = default;
-
+// cppcheck-suppress unusedFunction
     std::string getTipString() const override { return "Penthouse";}
-
-    [[maybe_unused]] int getNrDormitoare() const{ return nrDormitoare;}
+// cppcheck-suppress unusedFunction
+    int getNrDormitoare() const{ return nrDormitoare;}
 
     void afisareDetalii(std::ostream& os) const override;
     // cppcheck-suppress unusedFunction
