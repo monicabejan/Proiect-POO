@@ -19,9 +19,9 @@ public:
     rezervare(const rezervare& other);
     rezervare& operator=(const rezervare& other);
     ~rezervare();
-
-    [[maybe_unused]] int getID() const{ return idRezervare;}
-
+// cppcheck-suppress unusedFunction
+    int getID() const{ return idRezervare;}
+// cppcheck-suppress unusedFunction
     const std::string& getNumeClient() const;
 
     

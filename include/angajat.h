@@ -21,10 +21,11 @@ public:
     bool verificaParola(const std::string& p) const;
     const std::string& getUsername() const;
     const std::string& getNume() const;
+    // cppcheck-suppress unusedFunction
     double getSalariu() const;
 
-    
-    [[maybe_unused]] const std::string& getParola() const { return parola;}
+    // cppcheck-suppress unusedFunction
+    const std::string& getParola() const { return parola;}
 
     virtual std::string getRol() const = 0;
     virtual void afiseazaMeniu(hotel* h)=0;
@@ -45,7 +46,8 @@ class AngajatFrontDesk: public Angajat {
     std::string getRol() const override{ return "Front Desk";}
     void afiseazaMeniu(hotel *h) override;
     void inregistreazaCheckin() {++nrCheckinuri;}
-    [[maybe_unused]] int getNrCheckinuri() const { return nrCheckinuri;}
+    // cppcheck-suppress unusedFunction
+     int getNrCheckinuri() const { return nrCheckinuri;}
 };
 
 class AngajatHousekeeping : public Angajat{
@@ -57,7 +59,8 @@ class AngajatHousekeeping : public Angajat{
     std::string getRol() const override {return "Housekeeping";}
     void afiseazaMeniu(hotel* h) override;
     void marcheazaInCuratenie(hotel* h, int nrCamera);
-    [[maybe_unused]] int getNrCamereAsignate() const {return nrCamereAsignate;}
+    // cppcheck-suppress unusedFunction
+    int getNrCamereAsignate() const {return nrCamereAsignate;}
 };
 
 class Manager: public Angajat{
@@ -69,8 +72,10 @@ class Manager: public Angajat{
 
     std::string getRol() const override {return "Manager";}
     void afiseazaMeniu(hotel* h) override;
-    [[maybe_unused]] void setNrAngajati(int n) {nrAngajatiSupervizati=n;}
-    [[maybe_unused]] int getNrAngajati() const {return nrAngajatiSupervizati;}
+    // cppcheck-suppress unusedFunction
+    void setNrAngajati(int n) {nrAngajatiSupervizati=n;}
+    // cppcheck-suppress unusedFunction
+    int getNrAngajati() const {return nrAngajatiSupervizati;}
 };
 
 

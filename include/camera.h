@@ -80,6 +80,7 @@ public:
     [[maybe_unused]] int getNrDormitoare() const{ return nrDormitoare;}
 
     void afisareDetalii(std::ostream& os) const override;
+    // cppcheck-suppress unusedFunction
     void citesteDetalii(std::istream& is) override;
 }; 
 
