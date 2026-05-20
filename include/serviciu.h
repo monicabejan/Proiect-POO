@@ -31,7 +31,7 @@ public:
 class ServiciuLaundry:public Serviciu{
     int nrPiese;
     public:
-    ServiciuLaundry(int nrPiese, double pretPerPiesa=15.0);
+    explicit ServiciuLaundry(int nrPiese, double pretPerPiesa=15.0);
 
     ServiciuLaundry(const ServiciuLaundry& other);
     ~ServiciuLaundry() override=default;
@@ -46,7 +46,7 @@ class ServiciuRoomService:public Serviciu{
     std::string comanda;
     bool urgent;
     public:
-    ServiciuRoomService(const std::string& comanda, bool urgent=false, double pret=50.0);
+    explicit ServiciuRoomService(const std::string& comanda, bool urgent=false, double pret=50.0);
     ServiciuRoomService(const ServiciuRoomService& other);
     ~ServiciuRoomService() override =default;
 
@@ -59,7 +59,7 @@ class ServiciuRoomService:public Serviciu{
 class ServiciuSpa :public Serviciu{
     int durataMasaj;
     public:
-    ServiciuSpa(int durata, double pretPerMinut=3.0);
+    explicit ServiciuSpa(int durata, double pretPerMinut=3.0);
     ServiciuSpa(const ServiciuSpa& other);
     ~ServiciuSpa() override = default;
 
