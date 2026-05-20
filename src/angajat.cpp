@@ -81,7 +81,10 @@ void AngajatFrontDesk::afiseazaMeniu(hotel *h){
                     std::string nume;
                     std::cout<<"\nNume client: ";
                     std::cin>>nume;
-                    rezervare sesiune(nume);
+                    int nopti;
+                    std::cout<<"\nNumar de nopti: ";
+                    std::cin>>nopti;
+                    rezervare sesiune(nume, nopti);
                     int nrCam;
                     do{
                         h->afisareCamereLibere();

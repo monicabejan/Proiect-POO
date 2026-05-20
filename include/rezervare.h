@@ -11,10 +11,11 @@ class rezervare{
     static int contorID;
     int idRezervare;
     std::string numeClient;
+    int nrNopti;
     std::vector<std::shared_ptr<camera>>camereRezervate;
     std::vector<std::shared_ptr<Serviciu>> serviciiAditionale;
 public:
-    explicit rezervare(const std::string& nume);
+    rezervare(const std::string& nume, int nrNopti);
     rezervare(const rezervare& other);
     rezervare& operator=(const rezervare& other);
     ~rezervare();

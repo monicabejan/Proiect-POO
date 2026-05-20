@@ -36,14 +36,11 @@ class ExceptieOptiuneInvalida: public ExceptieHotel{
     ExceptieOptiuneInvalida(): ExceptieHotel("Optiune invalida"){}
 };
 
-class ExceptieUsernameDuplicat: public std::exception
+class ExceptieUsernameDuplicat: public ExceptieHotel
 {
-    std::string mesaj;
-    public:
-    ExceptieUsernameDuplicat(const std::string& user): mesaj("Username-ul "+user+" este luat deja"){}
-    const char* what() const noexcept override{
-        return mesaj.c_str();
-    }
+public:
+    explicit ExceptieUsernameDuplicat(const std::string& user) : ExceptieHotel("\nUsername-ul "+user+" este luat deja\n") {}
+
 };
 
 #endif

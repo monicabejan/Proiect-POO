@@ -12,7 +12,11 @@
 
 
 void proceseazaRezervareActiva(hotel * h, const std::string& numeClient){
-    rezervare rez(numeClient);
+    
+    int nopti;
+    std::cout<<"\nNumar de nopti: ";
+    std::cin>>nopti;
+    rezervare rez(numeClient, nopti);
     int optiune=0;
 
     do{
