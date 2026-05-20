@@ -1,13 +1,15 @@
-#include "../include/meniu.h"
-#include "../include/angajat.h"
-#include "../include/exceptii.h"
-#include "../include/serviciu.h"
-#include "../include/hotel.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <string>
 #include <memory>
+
+#include "../include/meniu.h"
+#include "../include/angajat.h"
+#include "../include/exceptii.h"
+#include "../include/serviciu.h"
+#include "../include/hotel.h"
+
 
 void proceseazaRezervareActiva(hotel * h, const std::string& numeClient){
     rezervare rez(numeClient);
@@ -195,7 +197,6 @@ void pornesteAplicatia(hotel* hotel){
         try{
             switch(optiune){
                 case 0:
-                hotel->salveazaDatele();
                 break;
 
                 case 1:

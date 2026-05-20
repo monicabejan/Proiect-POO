@@ -23,7 +23,7 @@ public:
     const std::string& getNume() const;
     double getSalariu() const;
 
-    static std::shared_ptr<Angajat> creeazaDinLinie(const std::string& linie);
+    
     const std::string& getParola() const { return parola;}
 
     virtual std::string getRol() const = 0;

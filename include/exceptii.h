@@ -21,7 +21,7 @@ public:
 class ExceptiePretInvalid: public ExceptieHotel{
     double pretIntrodus;
 public:
-    explicit ExceptiePretInvalid(double p):ExceptieHotel("Pret invalid: "+std::to_string(p)), pretIntrodus(p) {}
+    explicit ExceptiePretInvalid(double p):ExceptieHotel("Pret invalid: "+ std::to_string(p)), pretIntrodus(p) {}
     double getPretIntrodus() const { return pretIntrodus;}
 };
 

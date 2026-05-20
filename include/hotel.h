@@ -6,9 +6,11 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+
 #include "camera.h"
 #include "rezervare.h"
- class Angajat;
+
+class Angajat;
 class hotel {
     std::vector<std::shared_ptr<camera>> camere;
     std::vector<rezervare> istoricRezervari;
@@ -23,7 +25,7 @@ public:
     void afisareCamereLibere() const;
     void afisareToateCamerele() const;
     void afisareCamereFiltrat(double pretMax) const;
-    void rezervaCamera(int nr);
+    void rezervaCamera(int nr); 
     void elibereazaCamera(int nr);
     void afisareTarife() const;
     void afisareStatistici() const;
@@ -39,8 +41,6 @@ public:
     Angajat* gasesteAngajat(const std::string& username, const std::string& parola) const;
     void afisareAngajati() const;
     
-    void incarcaDatele();
-    void salveazaDatele() const;
 
     template <typename T, typename... Args>
     void creeazaCamera(Args&&... args){

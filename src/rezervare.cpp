@@ -1,8 +1,10 @@
-#include "rezervare.h"
-
 #include <vector>
 #include <iostream>
 #include <numeric>
+
+#include "../include/rezervare.h"
+
+
 
 int rezervare::contorID=0;
 
@@ -60,6 +62,7 @@ void rezervare::afiseazaSumar() const{
         for(const auto& s : serviciiAditionale)
             std::cout<<" "<<*s<<"\n";
     }
+    
     std::cout<<"Total de plata: "<<calculeazaTotal()<<std::endl;
 
 }

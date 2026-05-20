@@ -26,10 +26,9 @@ int main()
     hotel->creeazaCamera<cameraDouble>(105, 1, "Twin", 200);
     hotel->creeazaCamera<cameraDouble>(106, 2, "Matrimonial");
 
-    hotel->creeazaCamera<penthouse>(201, 2, 3, 550);
+    hotel->creeazaCamera<penthouse>(201, 2, 3, 500);
     hotel->creeazaCamera<penthouse>(202, 2, 4);
 
-    hotel->incarcaDatele();
 
     pornesteAplicatia(hotel);
     

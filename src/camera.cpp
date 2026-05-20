@@ -1,41 +1,11 @@
-#include "camera.h"
-#include "exceptii.h"
 #include <sstream>
 #include <memory>
 
-std::shared_ptr<camera> camera::creeazaDinLinie(const std::string& linie){
-    if(linie.empty()) return nullptr;
-
-    std::stringstream ss(linie);
-    std::string tip;
-    int nr, et, status;
-    double pret;
-
-    ss>>tip>>nr>>et>>pret>>status;
-
-    std::shared_ptr<camera> cam=nullptr;
-    if(tip=="Single")
-        cam=std::make_shared<cameraSingle>(nr, et, pret);
-    else if(tip=="Double"){
-        std::string config;
-        ss>>config;
-        cam=std::make_shared<cameraDouble>(nr, et, config, pret);
-    }
-    else if(tip=="Penthouse"){
-        int nrDorm;
-        ss>>nrDorm;
-        cam=std::make_shared<penthouse>(nr, et, nrDorm, pret);
-    }
-
-    if(cam && status ){
-        cam->setOcupata(true);
-    }
-    return cam;
-}
+#include "../include/camera.h"
+#include "../include/exceptii.h"
 
 
-
-camera::camera(int nr, int et, Valuta<double> p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
+camera::camera(int nr, int et, double p) : nrCamera(nr), etaj(et), pret(p), status(false) {}
 camera::camera(const camera& other) : nrCamera(other.nrCamera), etaj(other.etaj), pret(other.pret), status(other.status) {}
 camera& camera::operator=(const camera& other){
     if(this!=&other){

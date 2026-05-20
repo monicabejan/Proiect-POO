@@ -1,66 +1,15 @@
-#include "hotel.h"
-#include "angajat.h"
-#include "exceptii.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>
 #include <iterator>
-#include "camera.h"
-
-#include <fstream>
 #include <string>
 
-void hotel::incarcaDatele(){
-    std::ifstream fCamere("camere.txt");
-    std::string linie;
-    if(fCamere.is_open()){
-        camere.clear();
-        while(std::getline(fCamere, linie)){
-            auto cam=camera::creeazaDinLinie(linie);
-            if(cam) camere.push_back(cam);
-        }
-        fCamere.close();
-    }
-
-    std::ifstream fAngajati("angajati.txt");
-    if(fAngajati.is_open()){
-        angajati.clear();
-        while(std::getline(fAngajati, linie)){
-            auto ang=Angajat::creeazaDinLinie(linie);
-            if(ang) angajati.push_back(ang);
-        }
-        fAngajati.close();
-    }
-}
-
-void hotel::salveazaDatele() const{
-    std::ofstream fCamere("camere.txt");
-    for(const auto& cam : camere){
-        fCamere<<cam->getTipString()<<" "<<cam->getNr()<<" "
-                <<cam->getEtaj()<<" "<<cam->getPret()<<" "
-                <<(cam->esteOcupata() ? 1: 0);
-        if(cam->getTipString()=="Double"){
-            auto dCam=std::dynamic_pointer_cast<cameraDouble>(cam);
-            if(dCam) fCamere<<" "<<dCam->getTipConfiguratie();
-        }
-        else if(cam->getTipString()=="penthouse"){
-            auto pCam=std::dynamic_pointer_cast<penthouse>(cam);
-            if(pCam) fCamere<<" "<<pCam->getNrDormitoare();
-        }
-        fCamere<<"\n";
-
-    }
-    fCamere.close();
-
-    std::ofstream fAngajati("angajati.txt");
-    for(const auto& ang : angajati){
-        fAngajati<<ang->getRol()<<" "<<ang->getUsername()<<" "
-                 <<ang->getParola()<<" "<<ang->getSalariu()<<" "
-                 <<ang->getNume()<<"\n";
-    }
-    fAngajati.close();
-}
-
+#include "../include/camera.h"
+#include "../include/serviciu.h"
+#include "../include/rezervare.h"
+#include "../include/hotel.h"
+#include "../include/angajat.h"
+#include "../include/exceptii.h"
 
 hotel* hotel::getInstanta(){
     static hotel instantaUnica;
@@ -72,7 +21,7 @@ void hotel::afisareCamereLibere() const{
 
     bool existaLibere=false;
     for (const auto& camPtr : camere){
-        if(! camPtr->esteOcupata()){
+        if(!camPtr -> esteOcupata()){
             std::cout<<*camPtr<<std::endl;
             existaLibere=true;
         }
